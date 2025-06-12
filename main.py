@@ -25,9 +25,9 @@ thermistor_pin = ADC(26)
 prev_button_state = 1 # i.e. not pressed down
 
 while True:
-    raw_value = thermistor_pin.read_u16() # raw value from thermometer
+    raw_value = thermistor_pin.read_u16() # raw value read as millivolts
 
-    temperature = adc_to_celsius(raw_value) # converted raw value to Celcius degrees
+    temperature = adc_to_celsius(raw_value) # converted millivolts to Celcius degrees
 
     current_button_state = button.value()
 
