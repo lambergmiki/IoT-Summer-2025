@@ -20,6 +20,11 @@ def connect():
     print('\nConnected on {}'.format(ip))
     return ip
 
+def disconnect():
+    wlan = network.WLAN(network.STA_IF)         # Put modem on Station mode
+    wlan.disconnect()
+    wlan = None
+
 def http_get(url = 'http://detectportal.firefox.com/'):
     import socket                           # Used by HTML get request
     import time                             # Used for delay
