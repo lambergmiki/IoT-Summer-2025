@@ -2,7 +2,7 @@ import time # imports methods from time library
 from machine import Pin, ADC
 from thermistor import adc_to_celsius # imports celcius converting method
 from mqtt import MQTTClient # For use of MQTT protocol to talk to Adafruit IO
-import wifiConnection # Contains functions to connect/disconnect from WiFi
+import boot # Contains functions to connect/disconnect from WiFi
 import keys # Contains all keys used here
 
 
@@ -30,7 +30,7 @@ def send_temperature():
 
 # Try WiFi Connection
 try:
-    ip = wifiConnection.connect()
+    ip = boot.connect()
 except KeyboardInterrupt:
     print("Keyboard interrupt")
 
@@ -46,5 +46,5 @@ except Exception as e:
     print("Something went wrong:", e)
 finally:
     client.disconnect()
-    wifiConnection.disconnect()
+    boot.disconnect()
     print("Disconnected cleanly.")
