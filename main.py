@@ -15,16 +15,15 @@ led = Pin(0, Pin.OUT)
 # Thermistor pin setup
 thermistor_pin = ADC(26)
 
-
-
 def send_temperature():
     raw_value = thermistor_pin.read_u16() # raw value read as millivolts
-    temperature = adc_to_celsius(raw_value) # converted millivolts to Celcius degrees
-    print("Sending temperature to Adafruit feed: ", temperature)
+    temperature = adc_to_celsius(raw_value) # converts millivolts to Celsius degrees
+    print(f"Sending temperature to Adafruit feed: {temperature} Celcius degrees")
     client.publish(keys.AIO_TEMPS_FEED, str(temperature)) # send message as string payload to conform to MQTT message policy
 
+    # Flash LED briefly to visually indicate that data has been transferred
     led.on()
-    time.sleep(0.3)
+    time.sleep(0.5)
     led.off()
 
 
@@ -41,7 +40,7 @@ client.connect()
 try:
     while True:
         send_temperature()
-        time.sleep(60)
+        time.sleep(30)
 except Exception as e:
     print("Something went wrong:", e)
 finally:
