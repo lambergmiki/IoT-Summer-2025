@@ -7,9 +7,9 @@ def connect():
     if not wlan.isconnected():                  # Check if already connected
         print('connecting to network...')
         wlan.active(True)                       # Activate network interface
-        # set power mode to get WiFi power-saving off (if needed)
+        # Set power mode to "No Powersave mode" for Wi-Fi to work.
         wlan.config(pm = 0xa11140)
-        wlan.connect(keys.WIFI_SSID, keys.WIFI_PASS)  # Your WiFi Credential
+        wlan.connect(keys.WIFI_SSID, keys.WIFI_PASS) # Wi-Fi credentials
         print('Waiting for connection...', end='')
         # Check if it is connected otherwise wait
         while not wlan.isconnected() and wlan.status() >= 0:
@@ -27,14 +27,13 @@ def disconnect():
 
 def http_get(url = 'http://detectportal.firefox.com/'):
     import socket                           # Used by HTML get request
-    import time                             # Used for delay
     _, _, host, path = url.split('/', 3)    # Separate URL request
     addr = socket.getaddrinfo(host, 80)[0][-1]  # Get IP address of host
     s = socket.socket()                     # Initialise the socket
     s.connect(addr)                         # Try connecting to host address
     # Send HTTP request to the host with specific path
     s.send(bytes('GET /%s HTTP/1.0\r\nHost: %s\r\n\r\n' % (path, host), 'utf8'))    
-    time.sleep(1)                           # Sleep for a second
+    sleep(1)
     rec_bytes = s.recv(10000)               # Receve response
     print(rec_bytes)                        # Print the response
     s.close()                               # Close connection

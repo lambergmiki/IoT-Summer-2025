@@ -1,4 +1,4 @@
-import time # imports methods from time library
+from time import sleep # import sleep for implementing delay
 from machine import Pin, ADC
 from thermistor import adc_to_celsius # imports celcius converting method
 from mqtt import MQTTClient # For use of MQTT protocol to talk to Adafruit IO
@@ -23,7 +23,7 @@ def send_temperature():
 
     # Flash LED briefly to visually indicate that data has been transferred
     led.on()
-    time.sleep(0.5)
+    sleep(0.5)
     led.off()
 
 
@@ -40,7 +40,7 @@ client.connect()
 try:
     while True:
         send_temperature()
-        time.sleep(30)
+        sleep(30)
 except Exception as e:
     print("Something went wrong:", e)
 finally:

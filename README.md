@@ -14,13 +14,7 @@ As mentioned in the project overview, the initial objective was to create a sens
 
 However, as the project progressed, I realized I would want more than just ambient temperature readings at some point — I would want to monitor the actual temperature of the dough itself. Reading the temperatures of the dough would make for more accurate readings because it's affected by kneading and our body temperature which means it often has a different temperature than the ambient temperature.
 
-After discussions with TA's I was given the recommendation to try a DS18B20*, a *digital* temperature sensor which is food safe and can be inserted into the actual dough**, this was an excellent idea which I, unfortunately, did not attempt to build due to other commitments.
-<br>
-
-<small>* DS18B20</small>
-<br>
-<img src="./images/ds18b20.png" width="150"><br>
-<small>** I am not quite sure if the dough, in the proofing process, would "consume" the probe, which is why I want to leave a disclaimer.</small>
+After discussions with TA's I was given the recommendation to try a DS18B20 (see the Glossary), a *digital*, food-safe temperature probe that can be inserted into the actual dough for a more accurate reading. It should be said that I do not know whether the proofing of a pizza dough would consume the probe or not.
 
 
 # Material
@@ -125,7 +119,69 @@ Done!
 
 # Putting everything together
 
-_(Coming soon)_
+### Glossary
+**Breadboard** - something something
+
+**Physical pin** – The actual numbered pin location on the MCU.
+
+**Anode** – The longer leg of an LED; connects to positive voltage.
+
+**Cathode** – The shorter leg of an LED; connects to ground.
+
+**ADC (Analog-to-Digital Converter)** – A pin that can read varying voltages, converting them into digital values.
+
+**Thermistor** - something something
+
+**DS18B20** – A digital, food‑safe 1‑wire temperature sensor.
+
+
+
+My wiring here is minimal on purpose, I prioritized to make a simple construction that I'd understand within my limited timeframe.
+
+I should add that the LED and button can be tested independently (using power and ground); meaning they don't need to be connected to an MCU as I do in this tutorial.
+
+
+Step 1.1 – Connect the LED
+
+To prevent the LED receiving too much power via the GP0 pin (3.3V by default) a resistor has to be connected, regulating the current flowing to the LED.
+
+* Connect the anode (long leg) of the LED to GP0, which is physical pin 1 on the Pico.
+
+* Connect the cathode (short leg) to the negative rail of the breadboard.
+    * The rail acts as a shared ground point.
+
+* Connect one end of the 220 ohm resistor to the same negative rail, adjacent to the cathode of the LED, and the other end to GND, which is physical pin 3 of the Pico.
+    * The resistor is now adjacent to both ends of the LED and it controls the current flowing through to LED to prevent delivering too much voltage.
+
+<img src="./images/debugging_led.png">
+
+#### Step 2. Add a button (Optional)
+You can add a button if you want to interact with your code — for example, to start/stop readings or record data only on press.
+
+In my case, I chose continuous temperature readings, so the button was just an experimental detour for learning purposes.
+
+The button itself is plugged in centrally on the board, connected to the Pico with two jumpers wires - one to GP15 and one to GND, physical pins 20 and 18 respectively. That's it. In code you can then manipulate what a button press does, e.g. record the temperature.
+
+<img src="./images/led_and_button.png">
+
+#### Step 3. Add the temperature sensor, thermistor.
+Now it is time to add a thermistor on the breadboard which is regulated by another resistor, this time a 10k ohm one and three jumper wires.
+
+* Connect the thermistor to the opposite side of the LED on the breadboard.
+* Connect a jumper wire (yellow in my circuit) on the same rail as the thermistor, and then plug the other end in on GP26, physical pin 31.
+* Connect another jumper wire (black in my circuit) to the same rail as the other leg of the thermistor (refer to the picture below) and then plug the other end in on GND, physical pin 23.
+* Connect a third and final jumper wire (red in my circuit) to 3V3(OUT), physical pin 36. Connect the other end somewhere on the same rail as the previous two jumper wires.
+* Lastly, plug the 10k ohm resistor on the breadboard so that one end is on the same rail as the 3V3(OUT)-jumper wire, and the other on the same rail as the thermistor and jumper wire which is connected to the GP26 (ADC) port on the Pico.
+
+GP26 on the Pico reads the voltage input from the thermistor, converts it to a digital value (since it's an ADC port) and the rest is handled on code side.
+
+<img src="./images/led_button_sensor.png">
+
+
+#### Step 4. Final circuit, no button
+This is the end result, with the resistor color code and pinout chart available.
+The button has been removed because it serves no purpose in my project.
+<img src="./images/final_result.png">
 
 
 # Platform
@@ -179,17 +235,34 @@ def adc_to_celsius(x):
 
 # Transmitting the data / connectivity
 
-_(Coming soon)_
+The data, in my case temperature readings, is transmitted to the internet, specifically https://io.adafruit.com via Wi-Fi and the MQTT-protocol.
 
+During the course the data has been sent in intervals of 30-60 seconds.
+
+If the threshold in my personal code has been exceeded, e.g. ambient temperature of >=24 then a message has been sent to me on Discord, alerting me that that is the case. This is done via a webhook as described in [this guide](https://hackmd.io/@lnu-iot/r1yEtcs55#Webhooks-in-Adafruit-and-sending-messages-to-the-Discord-server) provided by the course.
 
 # Presenting the data
 
 Below you can see a standard line chart and feed data with typical attributes such as 'data', 'created at' and the possibility to add, download and filter data.
+As I mentioned in #Transmitting the data / connectivity,<- refer to previous chapter here, whats the syntax? the data has been collected in intervals of 30-60 seconds, currently set to a fixed 30 seconds.
+
+At the time of writing this the data stored is 314kb large, with feed history being capped at 1KB (is this correct)?. The data history is not particularly important to me, as long as new data can overwrite the old one and keep me alerted via the webhook, then nothing needs to be adressed.
+
+Adafruit stores the data for 30 days in the free tier.
+
 <img src="./images/adafruit_temps_feed.png" alt="adafruit_temp_line_chart">
 <img src="./images/adafruit_temps_feed2.png" alt="adafruit_temp_feed_data">
 
 
-# Finalizing the design
+# Finalizing the design and conclusion
 
-_(Coming soon)_
+At this point I've provided many pictures throughout the process, and a finalized circuit in #Putting everything together <- fix syntax so it refers to the chapter.
 
+The visualized data can be seen in the above chapter, so all that is left is a conclusion and screen shots of the trigger and action-event, along with a friendly message from Tempy, the Temperature Bot.
+
+What's next?
+
+After this experience I want to create an automated watering system for my parents in law. I believe this project paved the way for future endeavours in the field. While not entirely IoT-related, I am very curious about soldering and building my own keyboard, specifically with a MCU like the RP2040 I've used here.
+
+<img src="./images/action.png">
+<img src="./images/alert.png">
