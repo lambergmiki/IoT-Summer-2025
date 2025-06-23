@@ -3,9 +3,9 @@
 
 When I started this project, the initial idea was to monitor the household temperature, since the ambient temperature in my household can significantly vary during summer and massively impact the proofing of my pizza doughs. I began with a basic starter kit that included a thermistor, an _analog sensor_, rather than something like a _digital_ DHT11 (which measures temperature and humidity), deeming it redundant for my end purposes. I simply wanted a temperature monitor which would ping me if the temperature went below or above X or Y degrees, allowing me to take appropriate measures for the pizza dough (e.g. placing it in the fridge if too warm, or opposite if too cold).
 
-With either a thermistor (analog) or DS18B20* (digital), building this monitor using this tutorial should take approximately 10–15 hours.
+With either a thermistor or DS18B20, building this monitor using this tutorial should take approximately 10–15 hours.
 
-* I will elaborate on this in # Objective below.
+P.S. If any term is unfamiliar to you, please refer to the [Glossary](#glossary).
 
 
 # Objective
@@ -14,7 +14,7 @@ As mentioned in the project overview, the initial objective was to create a sens
 
 However, as the project progressed, I realized I would want more than just ambient temperature readings at some point — I would want to monitor the actual temperature of the dough itself. Reading the temperatures of the dough would make for more accurate readings because it's affected by kneading and our body temperature which means it often has a different temperature than the ambient temperature.
 
-After discussions with TA's I was given the recommendation to try a DS18B20 (see the Glossary), a *digital*, food-safe temperature probe that can be inserted into the actual dough for a more accurate reading. It should be said that I do not know whether the proofing of a pizza dough would consume the probe or not.
+After discussions with TA's I was given the recommendation to try a DS18B20, a *digital*, food-safe temperature probe that can be inserted into the actual dough for a more accurate reading. It should be said that I do not know whether the proofing of a pizza dough would consume the probe or not.
 
 
 # Material
@@ -120,7 +120,8 @@ Done!
 # Putting everything together
 
 ### Glossary
-**Breadboard** - something something
+
+**Breadboard** - A plastic board that does not require soldering. A variety of electronic systems can be prototyped ths way. 
 
 **Physical pin** – The actual numbered pin location on the MCU.
 
@@ -130,7 +131,7 @@ Done!
 
 **ADC (Analog-to-Digital Converter)** – A pin that can read varying voltages, converting them into digital values.
 
-**Thermistor** - something something
+**Thermistor** - A special resistor that changes how much it "resists" electricity based on the temperature changes. These changes in resistance can later be converted to an actual temperature in, say, Celsius degrees.
 
 **DS18B20** – A digital, food‑safe 1‑wire temperature sensor.
 
@@ -244,7 +245,7 @@ If the threshold in my personal code has been exceeded, e.g. ambient temperature
 # Presenting the data
 
 Below you can see a standard line chart and feed data with typical attributes such as 'data', 'created at' and the possibility to add, download and filter data.
-As I mentioned in #Transmitting the data / connectivity,<- refer to previous chapter here, whats the syntax? the data has been collected in intervals of 30-60 seconds, currently set to a fixed 30 seconds.
+As I mentioned in [#Transmitting the data / connectivity](#Transmitting-the-data-/-connectivity), the data has been collected in intervals of 30-60 seconds, currently set to a fixed 30 seconds.
 
 At the time of writing this the data stored is 314kb large, with feed history being capped at 1KB (is this correct)?. The data history is not particularly important to me, as long as new data can overwrite the old one and keep me alerted via the webhook, then nothing needs to be adressed.
 
@@ -256,7 +257,7 @@ Adafruit stores the data for 30 days in the free tier.
 
 # Finalizing the design and conclusion
 
-At this point I've provided many pictures throughout the process, and a finalized circuit in #Putting everything together <- fix syntax so it refers to the chapter.
+At this point I've provided many pictures throughout the process, and a finalized circuit in [#Putting everything together](#Putting-everything-together).
 
 The visualized data can be seen in the above chapter, so all that is left is a conclusion and screen shots of the trigger and action-event, along with a friendly message from Tempy, the Temperature Bot.
 
