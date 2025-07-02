@@ -121,28 +121,25 @@ Done!
 
 ### Glossary
 
-**Breadboard** - A plastic board that does not require soldering. A variety of electronic systems can be prototyped ths way. 
 
-**Physical pin** – The actual numbered pin location on the MCU.
+| **Term**       | **Definition**                                                                                  |
+|----------------|-----------------------------------------------------------------------------------------------|
+| **Breadboard**  | A plastic board that does not require soldering. A variety of electronic systems can be prototyped this way. |
+| **Physical pin**| The actual numbered pin location on the MCU.                                                  |
+| **Anode**       | The longer leg of an LED; connects to positive voltage.                                       |
+| **Cathode**     | The shorter leg of an LED; connects to ground.                                                |
+| **ADC (Analog-to-Digital Converter)** | A pin that can read varying voltages, converting them into digital values.        |
+| **Thermistor**  | A special resistor that changes how much it "resists" electricity based on the temperature changes. These changes in resistance can later be converted to an actual temperature in, say, Celsius degrees. |
+| **DS18B20**     | A digital, food‑safe 1‑wire temperature sensor.                                                |
 
-**Anode** – The longer leg of an LED; connects to positive voltage.
-
-**Cathode** – The shorter leg of an LED; connects to ground.
-
-**ADC (Analog-to-Digital Converter)** – A pin that can read varying voltages, converting them into digital values.
-
-**Thermistor** - A special resistor that changes how much it "resists" electricity based on the temperature changes. These changes in resistance can later be converted to an actual temperature in, say, Celsius degrees.
-
-**DS18B20** – A digital, food‑safe 1‑wire temperature sensor.
-
-
+---
 
 My wiring here is minimal on purpose, I prioritized to make a simple construction that I'd understand within my limited timeframe.
 
 I should add that the LED and button can be tested independently (using power and ground); meaning they don't need to be connected to an MCU as I do in this tutorial.
 
 
-Step 1.1 – Connect the LED
+#### Step 1. Connect the LED
 
 To prevent the LED receiving too much power via the GP0 pin (3.3V by default) a resistor has to be connected, regulating the current flowing to the LED.
 
@@ -247,9 +244,9 @@ If the threshold in my personal code has been exceeded, e.g. ambient temperature
 Below you can see a standard line chart and feed data with typical attributes such as 'data', 'created at' and the possibility to add, download and filter data.
 As I mentioned in [#Transmitting the data / connectivity](#Transmitting-the-data-/-connectivity), the data has been collected in intervals of 30-60 seconds, currently set to a fixed 30 seconds.
 
-At the time of writing this the data stored is 314kb large, with feed history being capped at 1KB (is this correct)?. The data history is not particularly important to me, as long as new data can overwrite the old one and keep me alerted via the webhook, then nothing needs to be adressed.
+At the time of writing this the data stored is 314kb large. The data history is not particularly important to me, as long as new data can overwrite the old one and keep me alerted via the webhook, then nothing needs to be adressed.
 
-Adafruit stores the data for 30 days in the free tier.
+Adafruit stores the data for 30 days in the free tier, and there is no risk of exceeding the data cap for this type of data.
 
 <img src="./images/adafruit_temps_feed.png" alt="adafruit_temp_line_chart">
 <img src="./images/adafruit_temps_feed2.png" alt="adafruit_temp_feed_data">
