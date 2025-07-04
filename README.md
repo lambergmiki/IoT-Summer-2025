@@ -3,7 +3,7 @@
 
 When I started this project, the initial idea was to monitor the household temperature, since the ambient temperature in my household can significantly vary during summer and massively impact the proofing of my pizza doughs. I began with a basic starter kit that included a thermistor, an _analog sensor_, rather than something like a _digital_ DHT11 (which measures temperature and humidity), deeming it redundant for my end purposes. I simply wanted a temperature monitor which would ping me if the temperature went below or above X or Y degrees, allowing me to take appropriate measures for the pizza dough (e.g. placing it in the fridge if too warm, or opposite if too cold).
 
-With either a thermistor or DS18B20, building this monitor using this tutorial should take approximately 10–15 hours.
+With either a thermistor or DS18B20 [(more on this in Objective)](#objective), building this monitor using this tutorial should take approximately 10–15 hours.
 
 P.S. If any term is unfamiliar to you, please refer to the [Glossary](#glossary).
 
@@ -12,14 +12,11 @@ P.S. If any term is unfamiliar to you, please refer to the [Glossary](#glossary)
 
 As mentioned in the project overview, the initial objective was to create a sensor that monitors the ambient temperature where my pizza dough usually rests (the kitchen), and ping me on Discord if the temperature reaches a certain threshold so I could take the appropriate action. This would allow me to be do other things and not constantly worry about the fluctuating temperature - I would instead receive pings via the Discord application on my mobile phone.
 
-However, as the project progressed, I realized I would want more than just ambient temperature readings at some point — I would want to monitor the actual temperature of the dough itself. Reading the temperatures of the dough would make for more accurate readings because it's affected by kneading and our body temperature which means it often has a different temperature than the ambient temperature.
-
-After discussions with TA's I was given the recommendation to try a DS18B20, a *digital*, food-safe temperature probe that can be inserted into the actual dough for a more accurate reading. It should be said that I do not know whether the proofing of a pizza dough would consume the probe or not.
-
+However, as the project progressed, I realized I would possibly need more accurate readings of the dough temperature, rather than the ambient temperature. This led to discussions with a TA who recommended a DS18B20, a *digital*, food-safe temperature probe that I would insert into the dough for more accurate readings. I did not pursue this because of other priorities at the time, but it might be something worth trying in the future.
 
 # Material
 I chose the Basic Starter Kit by Freenove as recommended by the course management. Seeing as it was my first encounter with this kind of tech, I found it reasonable.
-The following items were used in this project. I've included the starter kit as a whole, but also the individual components that I actually used from that base kit. How they were used will follow in chapters below.
+The following items were used in this project. I've included the starter kit as a whole, but also the individual components that I actually used from that base kit. How they were used will follow in chapters below. Buying the components individually would cost much less than the starter kit, if the sole purpose is to copy this project.
 
 | Component                                                                                                                         | Image                                                 | Description                                                      | Cost                |
 |-----------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------|---------------------|
@@ -130,7 +127,6 @@ Done!
 | **Cathode**     | The shorter leg of an LED; connects to ground.                                                |
 | **ADC (Analog-to-Digital Converter)** | A pin that can read varying voltages, converting them into digital values.        |
 | **Thermistor**  | A special resistor that changes how much it "resists" electricity based on the temperature changes. These changes in resistance can later be converted to an actual temperature in, say, Celsius degrees. |
-| **DS18B20**     | A digital, food‑safe 1‑wire temperature sensor.                                                |
 
 ---
 
@@ -154,7 +150,7 @@ To prevent the LED receiving too much power via the GP0 pin (3.3V by default) a 
 <img src="./images/debugging_led.png">
 
 #### Step 2. Add a button (Optional)
-You can add a button if you want to interact with your code — for example, to start/stop readings or record data only on press.
+You can add a button if you want to interact with your gathering of data — for example, to start/stop readings or record data only on press.
 
 In my case, I chose continuous temperature readings, so the button was just an experimental detour for learning purposes.
 
